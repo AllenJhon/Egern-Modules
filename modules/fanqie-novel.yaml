@@ -1,0 +1,100 @@
+#!name=番茄小说去广告
+#!desc=番茄小说去广告 Egern模块
+#!homepage=https://yfamily.ml
+#!author=zqzess
+#!icon=https://raw.githubusercontent.com/deezertidal/private/main/icons/fanqie.png
+#!type=rules
+
+RULE:
+  - hostname: p6-ad-sign.byteimg.com
+    action: DROP
+  - hostname: p9-ad-sign.byteimg.com
+    action: DROP
+  - hostname: i.snssdk.com
+    action: DROP
+  - hostname: i-lq.snssdk.com
+    action: DROP
+  - hostname: dig.bdurl.net
+    action: DROP
+  - hostname: activity-ag.awemeughun.com
+    action: DROP
+  - hostname: mcs.snssdk.com
+    action: DROP
+  - hostname: tnc3-alisc1.snssdk.com
+    action: DROP
+  - hostname: security-lq.snssdk.com
+    action: DROP
+  - hostname: tnc3-aliec2.snssdk.com
+    action: DROP
+  - hostname: is.snssdk.com
+    action: DROP
+  - hostname: v6-novelapp.ixigua.com
+    action: DROP
+  - hostname: msync-im1-vip6-std.easemob.com
+    action: DROP
+  - hostname: apd-pcdnwxlogin.teg.tencent-cloud.net
+    action: DROP
+  - hostname: api.iegadp.qq.com
+    action: DROP
+  - hostname: sf3-ttcdn-tos.pstatp.com
+    action: DROP
+
+  - hostname-suffix: byteorge.com
+    action: DROP
+  - hostname-suffix: bytegoofy.com
+    action: DROP
+  - hostname-suffix: bytedance.com
+    action: DROP
+
+  - ip: 49.71.37.101/32
+    action: DROP
+  - ip: 117.71.105.23/32
+    action: DROP
+  - ip: 218.94.207.205/32
+    action: DROP
+  - ip: 117.92.229.188/32
+    action: DROP
+  - ip: 101.36.166.16/32
+    action: DROP
+  - ip: 180.96.2.114/32
+    action: DROP
+
+  - url-regex: ^https?:\/\/.+\.pangolin-sdk-toutiao\.com\/api\/ad\/union\/sdk\/(geturlads|stats|settings)\/
+    action: DROP
+  - url-regex: ^https?:\/\/.+\.pglstatp-toutiao\.com\/.+\/toutiao\.mp4
+    action: DROP
+  - url-regex: ^https?:\/\/.+\.(pglstatp-toutiao|pstatp)\.com\/(obj|img)\/(ad-app-package|ad)\/.+
+    action: DROP
+  - url-regex: ^https?:\/\/.+\.(pglstatp-toutiao|pstatp)\.com\/(obj|img)\/web\.business\.image\/.+
+    action: DROP
+  - url-regex: ^https?:\/\/.+\.(pglstatp-toutiao|pstatp)\.com\/obj\/ad-pattern\/renderer
+    action: DROP
+  - url-regex: ^https?:\/\/gurd\.snssdk\.com\/src\/server\/v3\/package
+    action: DROP
+  - url-regex: ^https?:\/\/.+\.byteimg.com/tos-cn-i-1yzifmftcy\/(.+)-jpeg\.jpeg
+    action: DROP
+  - url-regex: ^https?:\/\/.+\.pstatp\.com\/obj\/mosaic-legacy\/.+\?from\=ad
+    action: DROP
+  - url-regex: ^https?:\/\/.+\.pstatp\.com\/bytecom\/resource\/trackurllog\/src\/.+
+    action: DROP
+  - url-regex: ^https?:\/\/.+\.snssdk\.com\/video\/play\/1\/toutiao\/.+\/mp4
+    action: DROP
+  - url-regex: ^https?:\/\/.+\.snssdk.com\/api\/ad\/.+
+    action: DROP
+  - url-regex: ^http:\/\/.+\.byteimg\.com\/ad-app-package
+    action: DROP
+  - url-regex: ^http:\/\/.+\.byteimg\.com\/web\.business\.image
+    action: DROP
+  - url-regex: ^https?:\/\/.+?\.snssdk\.com\/motor\/operation\/activity\/display\/config\/V2\/
+    action: DROP
+
+  - hostname-suffix: pangolin-sdk-toutiao
+    action: DROP
+  - hostname-suffix: pstatp.com
+    action: DROP
+  - hostname-suffix: pglstatp-toutiao.com
+    action: DROP
+  - hostname: gurd.snssdk.com
+    action: DROP
+  - hostname-suffix: default.ixigua.com
+    action: DROP
