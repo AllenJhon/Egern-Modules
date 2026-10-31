@@ -32,8 +32,14 @@ rules:
       policy: REJECT
 
 map_locals:
-  # 公众号文章底部广告接口：返回空，不走广告素材
+  # 公众号文章底部广告接口：按原接口格式返回“无广告”，而不是空对象，避免客户端因格式不对而回退到缓存广告
   - match: '^https://mp\.weixin\.qq\.com/mp/getappmsgad(\?|$)'
+    status_code: 200
+    headers:
+      Content-Type: application/json
+    body: '{"advertisement_num":0,"advertisement_info":[]}'
+  # 底部瀑布流推荐 / 相关文章 / 相关搜索（部分底部广告走这里）
+  - match: '^https://mp\.weixin\.qq\.com/mp/(masonryfeed|relatedarticle|relatedsearchword)(\?|$)'
     status_code: 200
     headers:
       Content-Type: application/json
