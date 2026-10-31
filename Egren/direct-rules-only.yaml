@@ -1,0 +1,57 @@
+# 直连规则（只替换用）- 模块一动不动
+# 用法：打开你原来的 iBL3ND.yaml，只把里面 rules: 这一整段替换成下面这一段，
+# 其他部分（dns、policy_groups、mitm、modules 等）全部保持原样，不要动。
+# 这样模块还是你原来那 36 个，启用状态也不变。
+#
+# 顺序说明：第一条命中即停，一次请求只走一个策略，不会重复访问。
+# 分层互不重叠：微信广告 REJECT > 局域网 > 特殊代理 > 国内域名 > 国内 IPv4 > 国内 IPv6 > 默认代理
+# 删掉的重叠规则集：原来另外两套域名规则集、另外一套 IPv4 规则集，它们和下面留下的内容高度重叠。
+
+rules:
+# --- 微信广告，必须在所有 DIRECT 之前，否则会被国内 DIRECT 抢先放行 ---
+- domain_suffix:
+    match: "wxs.qq.com"
+    policy: REJECT
+- domain_suffix:
+    match: "gdt.qq.com"
+    policy: REJECT
+- domain_suffix:
+    match: "pgdt.gtimg.cn"
+    policy: REJECT
+- domain_suffix:
+    match: "pgdt.ugdtimg.com"
+    policy: REJECT
+- domain:
+    match: "wxsmsdy.video.qq.com"
+    policy: REJECT
+# --- 局域网/私网，最先，本地流量不用走 DNS 和大规则集 ---
+- rule_set:
+    name: 域间路由
+    match: https://raw.githubusercontent.com/IBL3ND/rule/refs/heads/main/LAN.list
+    policy: DIRECT
+    disabled: false
+# --- 特殊域名走代理，放前面，避免被国内域名规则抢先直连 ---
+- domain:
+    match: tp4.wirqed.cn
+    policy: PROXY
+    disabled: false
+# --- 国内域名直连，只留这一套 ---
+- rule_set:
+    match: https://raw.githubusercontent.com/Rabbit-Spec/Surge/refs/heads/Master/Rules/China.list
+    policy: DIRECT
+    disabled: false
+# --- 国内 IPv4 直连，只留这一套 ---
+- rule_set:
+    name: ChinaIPs
+    match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/ChinaIPs/ChinaIPs.list
+    policy: DIRECT
+    disabled: false
+# --- 国内 IPv6 直连，和 IPv4 不重叠，单独留一套 ---
+- rule_set:
+    name: ChinaIPv6
+    match: https://ruleset.skk.moe/List/ip/china_ip_ipv6.conf
+    policy: DIRECT
+    disabled: false
+# --- 默认走代理 ---
+- default:
+    policy: PROXY
