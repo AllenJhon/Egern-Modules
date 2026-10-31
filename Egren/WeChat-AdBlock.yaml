@@ -1,0 +1,56 @@
+name: "微信公众号+小程序去广告"
+description: "去掉公众号文章底部广告（如途虎养车那种）和微信官方小程序广告组件。不拦正文、聊天、支付和小程序正常接口。激励广告奖励仍需服务端校验，拦广告不等于跳过领奖励。"
+author: "Muse"
+icon: "shield.fill"
+
+rules:
+  # 微信官方广告组件（小程序横幅 / 插屏等主要走这里）
+  - domain_suffix:
+      match: "wxs.qq.com"
+      policy: REJECT
+  - domain:
+      match: "wxsmsdy.video.qq.com"
+      policy: REJECT
+  - domain:
+      match: "wxsnsdythumb.wxs.qq.com"
+      policy: REJECT
+  # 腾讯广告联盟 / 广点通
+  - domain_suffix:
+      match: "gdt.qq.com"
+      policy: REJECT
+  - domain_suffix:
+      match: "pgdt.gtimg.cn"
+      policy: REJECT
+  - domain_suffix:
+      match: "pgdt.ugdtimg.com"
+      policy: REJECT
+  - domain:
+      match: "sdk.e.qq.com"
+      policy: REJECT
+  - domain:
+      match: "tangram.e.qq.com"
+      policy: REJECT
+
+map_locals:
+  # 公众号文章底部广告接口：返回空，不走广告素材
+  - match: '^https://mp\.weixin\.qq\.com/mp/getappmsgad(\?|$)'
+    status_code: 200
+    headers:
+      Content-Type: application/json
+    body: '{}'
+  # 公众号文中商品推广接口
+  - match: '^https://mp\.weixin\.qq\.com/mp/cps_product_info(\?|$)'
+    status_code: 200
+    headers:
+      Content-Type: application/json
+    body: '{}'
+  # 公众号广告监测上报
+  - match: '^https://mp\.weixin\.qq\.com/mp/jsmonitor(\?|$)'
+    status_code: 200
+    headers:
+      Content-Type: application/json
+    body: '{}'
+
+mitm:
+  hostnames:
+    - "mp.weixin.qq.com"

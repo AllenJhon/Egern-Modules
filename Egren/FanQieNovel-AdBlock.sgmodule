@@ -1,0 +1,30 @@
+#!name=番茄小说去广告
+#!desc=拦截番茄小说的开屏、章末、听书广告及广告统计上报请求，不拦截正文内容接口。仅用于个人设备。
+#!author=Muse
+#!category=去广告
+#!tag=去广告
+
+[Rule]
+# 字节跳动广告 SDK：穿山甲
+DOMAIN,api-access.pangolin-sdk-toutiao.com,REJECT
+DOMAIN-SUFFIX,pangolin-sdk-toutiao.com,REJECT
+DOMAIN-SUFFIX,pglstatp-toutiao.com,REJECT
+# 字节广告投放 / 监测
+DOMAIN,ads3-normal.zijieapi.com,REJECT
+DOMAIN,ads5-normal.zijieapi.com,REJECT
+DOMAIN,mon.toutiaocloud.net,REJECT
+DOMAIN,zlink.ugsdk.cn,REJECT
+DOMAIN,dig.bdurl.net,REJECT
+DOMAIN,dig.zjurl.cn,REJECT
+# 番茄小说自有广告统计 / 埋点（不影响正文 API）
+DOMAIN,log5-applog.fqnovel.com,REJECT
+DOMAIN,rtlog5-applog.fqnovel.com,REJECT
+
+[URL Rewrite]
+# 章末广告等广告接口：直接拒绝，不走 MITM 改写正文
+^https?://api-access\.pangolin-sdk-toutiao\.com/api/ad/union/sdk/(get_ads|stats|settings)/ - reject
+^https?://gurd\.snssdk\.com/src/server/v3/package - reject
+^https?://.+\.pglstatp-toutiao\.com/.+\.mp4 - reject
+
+[MITM]
+hostname = api-access.pangolin-sdk-toutiao.com, *.pglstatp-toutiao.com, gurd.snssdk.com
