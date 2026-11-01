@@ -1,19 +1,36 @@
 #!name = 腾讯视频净化
-#!desc = 去除开屏广告、视频播放前广告、底部的多余 tap 栏、我的页面美化、我的界面顶部广告
-#!author = TG@ZenMoFiShi
-#!update = 2026-10-27
+#!desc = Loon 原生版：过滤腾讯视频客户端广告。QX 二进制脚本在 Loon 里因 bodyBytes 不可用而无效，本版改用 Loon 原生规则 + vv.getvinfo 改请求体。
+#!author = TG@ZenMoFiShi, RuCu6, LinusZ
 #!system = ios
 
 [Rule]
 DOMAIN-SUFFIX,iacc.stgw.qq.com,REJECT
 DOMAIN-SUFFIX,tacc.video.qq.com,REJECT
+DOMAIN,adsmind.gdtimg.com,REJECT
+DOMAIN,info4.video.qq.com,REJECT
+DOMAIN,info6.video.qq.com,REJECT
+DOMAIN,ios.video.mpush.qq.com,REJECT
+DOMAIN,otheve.beacon.qq.com,REJECT
+DOMAIN,pgdt.gtimg.cn,REJECT
+DOMAIN,tpns.qq.com,REJECT
+DOMAIN,vv6.video.qq.com,REJECT
+DOMAIN,btrace.video.qq.com,REJECT
+DOMAIN,activity.video.qq.com,REJECT
+DOMAIN-SUFFIX,gdt.qq.com,REJECT
+DOMAIN-SUFFIX,l.qq.com,REJECT
+DOMAIN-KEYWORD,trace.qq.com,REJECT
+DOMAIN-KEYWORD,trace.video.qq.com,REJECT
+IP-CIDR,47.110.187.87/32,REJECT,no-resolve
+URL-REGEX,^http:\/\/[\d\.:]*\/?(defaultts\.tc|vmind\.qqvideo\.tc|finderpdd\.video)\.qq\.com\/\w+,REJECT
+URL-REGEX,^http:\/\/apd-vlive\.apdcdn\.tc\.qq\.com\/vmind\.qqvideo\.tc\.qq\.com\/\w+,REJECT
+URL-REGEX,^http:\/\/apd-\w+\.v\.smtcdns\.com\/(defaultts|omts|vmind\.qqvideo)\.tc\.qq\.com\/\w+,REJECT
+
+[Rewrite]
+^https?:\/\/vv\.video\.qq\.com\/(diff|get)vmind reject-dict
 
 [Script]
-http-request ^https?:\/\/i\.video\.qq\.com\/(?:\?.*)?$ script-path=https://raw.githubusercontent.com/ZenmoFeiShi/Qx/refs/heads/main/Txvideoad.js, requires-body=true, tag=腾讯视频净化-请求
-http-response ^https?:\/\/i\.video\.qq\.com\/(?:\?.*)?$ script-path=https://raw.githubusercontent.com/ZenmoFeiShi/Qx/refs/heads/main/Txvideoad.js, requires-body=true, tag=腾讯视频净化-响应
-http-response ^https?:\/\/iacc\.qq\.com\/(?:\?.*)?$ script-path=https://raw.githubusercontent.com/ZenmoFeiShi/Qx/refs/heads/main/Txvideoad.js, requires-body=true, tag=腾讯视频净化-iacc
-http-response ^https?:\/\/config\.ab\.qq\.com\/tab\/GetTabRemoteConfig(?:\?.*)?$ script-path=https://raw.githubusercontent.com/ZenmoFeiShi/Qx/refs/heads/main/Txvideoad.js, requires-body=true, tag=腾讯视频净化-配置
-http-response ^https:\/\/rdelivery\.qq\.com\/v1\/sdkconfig\/get(?:\?.*)?$ script-path=https://raw.githubusercontent.com/ZenmoFeiShi/Qx/refs/heads/main/Txvideoad.js, requires-body=true, tag=腾讯视频净化-sdk
+http-request ^https?:\/\/vv\.video\.qq\.com\/getvinfo script-path=https://raw.githubusercontent.com/linuszlx/JS/main/replace-body.js, requires-body=true, argument=&sppreviewtype=\d(.*)&spsrt=\d->&sppreviewtype=0$1&spsrt=0, tag=移除贴片广告
+http-response ^https:\/\/rdelivery\.qq\.com\/v1\/sdkconfig\/get(?:\?.*)?$ script-path=https://raw.githubusercontent.com/ZenmoFeiShi/Qx/refs/heads/main/Txvideoad.js, requires-body=true, tag=腾讯视频净化-tab
 
 [Mitm]
-hostname = i.video.qq.com, iacc.qq.com, config.ab.qq.com, rdelivery.qq.com
+hostname = vv.video.qq.com, rdelivery.qq.com
