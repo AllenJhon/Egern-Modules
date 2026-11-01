@@ -48,4 +48,4 @@ http-request ^https?:\/\/vv\.video\.qq\.com\/getvinfo script-path=https://raw.gi
 http-response ^https:\/\/rdelivery\.qq\.com\/v1\/sdkconfig\/get(?:\?.*)?$ script-path=https://raw.githubusercontent.com/ZenmoFeiShi/Qx/refs/heads/main/Txvideoad.js, requires-body=true, tag=腾讯视频净化-tab
 
 [Mitm]
-hostname = vv.video.qq.com, rdelivery.qq.com
+hostname = vv.video.qq.com, rdelivery.qq.comi，video.qq.com, iacc.qq.com, config.ab.qq.com
