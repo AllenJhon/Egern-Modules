@@ -1,7 +1,7 @@
-# 我的排班（早晚班定制版）
+# 琛姐的排班（早晚班定制版）
 # 脚本托管在 GitHub：导入模块时会自动从下面的 script_url 拉取脚本，不用再手动粘贴。
 # 更新脚本后重新导入模块即可生效（注意 raw.githubusercontent.com 有约 5 分钟缓存）。
-name: 我的排班
+name: 琛姐的排班
 description: 排班日历小组件；只留早班/晚班，不填日期按 11月1日早班起每天自动轮换（跨月连续），填了按填写的来
 author: iBL3ND
 icon: https://iili.io/nmvgG7R.webp

@@ -1,5 +1,5 @@
 /**
- * 🗓️ 我的排班小组件（早晚班定制版，基于 iBL3ND 原版修改）
+ * 🗓️ 琛姐的排班小组件（早晚班定制版，基于 iBL3ND 原版修改）
  *
  * 只留两个班次：早班 / 晚班（原版的夜班已改叫晚班）。
  * 排班数据：在模块设置里按班次填写本月日期号（逗号分隔）。
@@ -177,7 +177,7 @@ async function handleWidget(ctx) {
       direction: 'row',
       alignItems: 'center',
       children: [
-        { type: 'text', text: '我的排班', font: { size: titleSize, weight: 'bold' }, textColor: textMain },
+        { type: 'text', text: '琛姐的排班', font: { size: titleSize, weight: 'bold' }, textColor: textMain },
         { type: 'spacer' },
         { type: 'text', text: `今日 ${c1} · 明日 ${c2}`, font: { size: titleSize - 3, weight: 'bold' }, textColor: textMain },
         { type: 'spacer' },
